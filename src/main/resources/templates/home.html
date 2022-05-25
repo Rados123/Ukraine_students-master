@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#wojewodztwo').bind('change', function(){
+
+            $('#powiat option').remove();
+
+            switch($(this).val()) {
+                case '2':
+                    $('#powiat').append('<option value="0">---</option>');
+                    $('#powiat').append('<option value="201">bolesławiecki</option>');
+                    $('#powiat').append('<option value="202">dzierżoniowski</option>');
+                    $('#powiat').append('<option value="203">głogowski</option>');
+                    $('#powiat').append('<option value="204">górowski</option>');
+                    break;
+                case '4':
+                    $('#powiat').append('<option value="0">---</option>');
+                    $('#powiat').append('<option value="401">aleksandrowski</option>');
+                    $('#powiat').append('<option value="402">brodnicki</option>');
+                    break;
+                case '6':
+                    $('#powiat').append('<option value="0">000</option>');
+                    $('#powiat').append('<option value="601">bialski</option>');
+                    $('#powiat').append('<option value="602">biłgorajski</option>');
+                    break;
+            }
+
+
+
+        })
+    });
+</script>
+
+<style>
+
+    .styled-table {
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em;
+        font-family: sans-serif;
+        min-width: 400px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    }
+    .styled-table thead tr {
+        background-color: #009879;
+        color: #ffffff;
+        text-align: left;
+    }
+    .styled-table th {
+        text-align: center;
+    }
+    .styled-table td {
+        padding: 12px 15px;
+    }
+    .styled-table tbody tr {
+        border-bottom: 1px solid #dddddd;
+    }
+
+    .styled-table tbody tr:nth-of-type(even) {
+        background-color: #f3f3f3;
+    }
+
+    .styled-table tbody tr:last-of-type {
+        border-bottom: 2px solid #009879;
+    }
+    .styled-table tbody tr.active-row {
+        font-weight: bold;
+        color: #009879;
+    }
+    .image {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+<body>
+<div class="container-lg bg-light">
+    <div class="px-4 py-5 mt-5 mb-2 text-center">
+        <img class="d-block mx-auto mb-4" src="https://seeklogo.com/images/S/spring-logo-9A2BC78AAF-seeklogo.com.png" alt="" width="80" height="80">
+        <h1 class="display-5 fw-bold">Przeglądarka informacji o ukraińskich uczniach</h1>
+        <div class="col-lg-8 mx-auto">
+            <p class="lead">Jest to aplikacja bazodanowa stworzna przy wykorzystaniu bazy danych MSSQL, środowiska InteliJ IDE, frameworka Spring. Ma ona na celu przefiltrowanie dostępnych publicznie danych o ukraińskich uczniach uczących się w polskich szkołach. Dant pochodzą z dane.gov.pl z dnia 15 maja.  </p>
+        </div>
+    </div>
+    <div>
+        <img class="image" src="https://samorzad.gov.pl/photo/d98952cf-376f-4bdc-bc4f-0c9167c6127c">
+    </div>
+    <div>
+        <form th:action="@{/}" method="get">
+            <div class="form-group">
+                <label >Wybierz województwo</label>
+                <select  th:name="wojewodztwo" id="wojewodztwo"  class="form-control">
+                    <option value="0">---</option>
+                    <option value="2">Dolnośląskie</option>
+                    <option value="4">Kujawsko-Pomorskie</option>
+                    <option value="6">Lubelskie</option>
+                    <option value="8">Lubuskie</option>
+                    <option value="10">Łódzkie</option>
+                </select>
+                <label >Wybierz powiat</label>
+                <select th:name="powiat" id="powiat" class="form-control">
+                    <option value="0">---</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label >Wybierz publiczność szkoły</label>
+                <select th:name="publicznosc" class="form-control">
+                    <option value="0">---</option>
+                    <option value="1">Publiczna</option>
+                    <option value="4">Niepubliczna</option>
+                    <option value="5">Niepubliczna szkoła artystyczna o uprawnieniach publicznej szkoły artystycznej</option>
+                </select>
+                <label >Wybierz rodzaj szkoly</label>
+                <select th:name="podmiot" class="form-control">
+                    <option value="0">---</option>
+                    <option value="3">Szkoła Podstawowa</option>
+                    <option value="1">Przedszkole</option>
+                    <option value="14">Liceum ogólnokształczące</option>
+                    <option value="16">Technikum</option>
+
+                </select>
+            </div>
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-outline-success btn-lg">Prześlij</button>
+            </div>
+        </form>
+    </div>
+    <div>
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th scope="col">Wojewodztwo</th>
+                    <th scope="col">Powiat</th>
+                    <th scope="col">Publiczność szkoły</th>
+                    <th scope="col">Rodzaj szkoły</th>
+                    <th scope="col">Liczba szkol</th>
+                    <th scope="col">Liczba ukraińskich uczniów</th>
+                    <th scope="col">Z dodatkową nauką polskiego</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="student: ${students}">
+                    <td th:text="${student.getWojewodztwo()}"/>
+                    <td th:text="${student.getPowiat}"/>
+                    <td th:text="${student.getPublicznosc}"/>
+                    <td th:text="${student.getTypPodmiotu}"/>
+                    <td th:text="${student.getLiczbaSzkol}"/>
+                    <td th:text="${student.getUkraincy}"/>
+                    <td th:text="${student.getNaukaPolskiego}"/>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
